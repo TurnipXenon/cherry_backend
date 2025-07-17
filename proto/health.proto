@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package cherry.api.v1;
+
+option go_package = "cherry_backend/pkg/api/v1;apiv1";
+
+// HealthService defines the health check API
+service HealthService {
+  // Check performs a health check
+  rpc Check(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+// HealthCheckRequest represents a request to the health check endpoint
+message HealthCheckRequest {
+  // No parameters needed for a simple health check
+}
+
+// HealthCheckResponse represents a response from the health check endpoint
+message HealthCheckResponse {
+  // status indicates the health status of the service
+  string status = 1;
+}

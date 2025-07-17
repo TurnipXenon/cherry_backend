@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package cherry.api.v1;
+
+option go_package = "cherry_backend/pkg/api/v1;apiv1";
+
+// TodoistService defines the Todoist webhook API
+service TodoistService {
+  // ProcessWebhook processes incoming webhook notifications from Todoist
+  rpc ProcessWebhook(TodoistWebhookRequest) returns (TodoistWebhookResponse);
+}
+
+// TodoistWebhookRequest represents a request to the Todoist webhook endpoint
+message TodoistWebhookRequest {
+  // event_name is the name of the event (e.g., "item:added", "item:updated")
+  string event_name = 1;
+  
+  // user_id is the ID of the user who triggered the event
+  string user_id = 2;
+  
+  // event_data contains the event data as a JSON string
+  string event_data = 3;
+  
+  // version is the version of the webhook payload
+  string version = 4;
+}
+
+// TodoistWebhookResponse represents a response from the Todoist webhook endpoint
+message TodoistWebhookResponse {
+  // success indicates whether the webhook was processed successfully
+  bool success = 1;
+  
+  // message contains a human-readable message about the result
+  string message = 2;
+}
