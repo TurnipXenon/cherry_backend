@@ -91,9 +91,24 @@ This assumes that you have **Python** installed locally.
 
 ### MKDocs: Setup
 
+We use Material for MkDocs theme and several extensions. To set up your local environment, install the dependencies from the requirements file:
+
 ```shell
-pip install mkdocs
+# From the project root
+pip install -r docs/requirements.txt
 ```
+
+This ensures you're using the same versions of packages as the CI/CD pipeline and other contributors.
+
+#### Updating Dependencies
+
+If you need to add or update dependencies for the documentation:
+
+1. Update the `docs/requirements.txt` file with the new package or version
+2. Test locally to ensure everything works as expected
+3. Commit the changes to the requirements file
+
+We pin specific versions in the requirements file to ensure consistent builds across different environments.
 
 ### MKDocs: Commands
 
@@ -108,6 +123,54 @@ When entering these commands, go to `/docs` instead of being in the project's ro
 1. Make changes
 2. See changes made using `mkdocs serve`
 3. Commit and push your changes to the main branch
+
+### Material for MkDocs Features
+
+Our documentation uses Material for MkDocs with several features enabled:
+
+#### Theme Features
+
+- **Navigation Instant**: Provides faster page loading
+- **Navigation Tracking**: Automatically focuses the current section in the navigation
+- **Navigation Expand**: Expands all collapsible sections in the navigation
+- **Navigation Indexes**: Adds index pages to sections
+- **Content Code Copy**: Adds a copy button to code blocks
+
+#### Markdown Extensions
+
+We've enabled several markdown extensions that you can use in your documentation:
+
+- **Admonitions**: Create call-out blocks for notes, warnings, etc.
+  ```markdown
+  !!! note "Optional Title"
+      This is a note admonition.
+  ```
+
+- **Code Highlighting**: Syntax highlighting for code blocks
+  ```markdown
+  ```python
+  def hello_world():
+      print("Hello, world!")
+  ```
+  ```
+
+- **Tabbed Content**: Create tabbed content sections
+  ```markdown
+  === "Tab 1"
+      Content of tab 1
+
+  === "Tab 2"
+      Content of tab 2
+  ```
+
+- **Tables**: Create tables using markdown syntax
+  ```markdown
+  | Header 1 | Header 2 |
+  | -------- | -------- |
+  | Cell 1   | Cell 2   |
+  ```
+
+For more details on how to use these features, refer to the [Material for MkDocs documentation](https://squidfunk.github.io/mkdocs-material/).
 
 ### MKDocs: Automated Deployment
 
