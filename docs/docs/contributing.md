@@ -107,3 +107,14 @@ When entering these commands, go to `/docs` instead of being in the project's ro
 
 1. Make changes
 2. See changes made using `mkdocs serve`
+3. Commit and push your changes to the main branch
+
+### MKDocs: Automated Deployment
+
+The documentation is automatically deployed to GitHub Pages when changes are pushed to the main branch. This is handled by a GitHub Actions workflow that:
+
+1. Builds the MkDocs site
+2. Deploys it to the gh-pages branch
+3. Makes it available at the project's GitHub Pages URL
+
+You don't need to manually build or deploy the documentation - just push your changes to the main branch, and the workflow will handle the rest.
