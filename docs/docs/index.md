@@ -12,7 +12,7 @@
 
 - [ ] Setup?
 - [ ] Quickstart
-- [ ] [Onboarding guide](./onboarding.md)
+- [ ] Onboarding guide
 - [ ] Testing locally
 - [ ] Testing via dev stack
 - [ ] Deploying to production

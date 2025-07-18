@@ -1,0 +1,61 @@
+name: Question or Support Request
+description: Ask a question or request support
+title: "[Question]: "
+labels: ["question"]
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reaching out with your question! Before submitting, please check if your question has already been answered in existing issues, discussions, or documentation.
+  - type: dropdown
+    id: question-type
+    attributes:
+      label: Type of question
+      description: What type of question do you have?
+      options:
+        - How to use a feature
+        - Configuration help
+        - Integration with other tools
+        - Best practices
+        - Error troubleshooting
+        - Performance optimization
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: Please provide as much detail as possible about your question
+      placeholder: I'm trying to... but I'm not sure how to...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide any relevant context that might help us answer your question (environment, version, etc.)
+      placeholder: |
+        - Version: [e.g. v1.0.0]
+        - Environment: [e.g. Production, Development]
+        - Operating System: [e.g. Windows 10, Ubuntu 20.04]
+    validations:
+      required: false
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you tried so far?
+      description: Describe what you've already tried to solve your problem or answer your question
+      placeholder: I've tried looking at the documentation and...
+    validations:
+      required: false
+  - type: textarea
+    id: code
+    attributes:
+      label: Relevant code or configuration
+      description: If applicable, share any code or configuration related to your question
+      render: shell
+    validations:
+      required: false

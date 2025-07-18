@@ -1,0 +1,63 @@
+name: Documentation Improvement
+description: Suggest improvements to our documentation
+title: "[Docs]: "
+labels: ["documentation"]
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to help us improve our documentation!
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Type of documentation issue
+      description: What type of documentation issue is this?
+      options:
+        - Missing documentation
+        - Incorrect documentation
+        - Unclear documentation
+        - Outdated documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Documentation location
+      description: Where is the documentation you're referring to? Provide a link or path if possible.
+      placeholder: https://github.com/username/repo/blob/main/docs/file.md or README.md
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What's the issue with the documentation?
+      description: Describe what's missing, incorrect, unclear, or outdated.
+      placeholder: The documentation is missing information about...
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested improvement
+      description: How do you suggest we improve the documentation?
+      placeholder: I suggest adding/changing...
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional information
+      description: Add any other context about the documentation improvement here.
+    validations:
+      required: false
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to contribute to this documentation improvement?
+      options:
+        - label: I would be willing to submit a PR with these changes
+          required: false

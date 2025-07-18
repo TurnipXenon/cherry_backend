@@ -1,5 +1,7 @@
 # Cherry Backend
 
+[![Go Tests](https://github.com/TurnipXenon/cherry_backend/actions/workflows/go-tests.yml/badge.svg)](https://github.com/TurnipXenon/cherry_backend/actions/workflows/go-tests.yml)
+
 A backend service for the Cherry project.
 
 ## Description
