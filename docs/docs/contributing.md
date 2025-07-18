@@ -81,22 +81,29 @@ Fixes #456
 3. Increase the version numbers in any examples files and the README.md to the new version that this Pull Request would represent.
 4. The Pull Request will be merged once you have the sign-off of at least one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
 
-## Code of Conduct
 
-### Our Pledge
+## MKDocs
 
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone.
+You don't really need to run through this to make edits to MKDocs, but if you want to see the layout and what it looks
+like served, check this guide.
 
-### Our Standards
+This assumes that you have **Python** installed locally.
 
-Examples of behavior that contributes to creating a positive environment include:
+### MKDocs: Setup
 
-- Using welcoming and inclusive language
-- Being respectful of differing viewpoints and experiences
-- Gracefully accepting constructive criticism
-- Focusing on what is best for the community
-- Showing empathy towards other community members
+```shell
+pip install mkdocs
+```
 
-### Our Responsibilities
+### MKDocs: Commands
 
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+When entering these commands, go to `/docs` instead of being in the project's root folder `/`.
+
+* `mkdocs serve` - Start the live-reloading docs server.
+* `mkdocs build` - Build the documentation site.
+* `mkdocs -h` - Print help message and exit.
+
+### MKDocs: Ideal workflow
+
+1. Make changes
+2. See changes made using `mkdocs serve`

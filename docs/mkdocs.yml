@@ -1,0 +1,5 @@
+site_name: Cherry
+nav:
+  - Home: index.md
+  - Code standards: code_standards.md
+  - Contributing: contributing.md
