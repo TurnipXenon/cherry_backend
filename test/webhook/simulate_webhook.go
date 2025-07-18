@@ -28,9 +28,9 @@ func main() {
 		"content":     "Test task",
 		"description": "This is a test task created by the webhook simulator",
 		"due": map[string]interface{}{
-			"date":        "2023-12-31",
+			"date":         "2023-12-31",
 			"is_recurring": false,
-			"string":      "Dec 31",
+			"string":       "Dec 31",
 		},
 		"priority": 1,
 	}

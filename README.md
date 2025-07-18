@@ -12,7 +12,7 @@ Cherry Backend is a Go-based service that provides API endpoints for the Cherry 
 
 - Go 1.19 or higher
 - Git
-- Protocol Buffers compiler (protoc)
+- protoc
 - Make (for Windows users, see installation instructions below)
 
 #### Installing Make on Windows
@@ -207,6 +207,30 @@ if err != nil {
 fmt.Printf("Status: %s\n", response.Status)
 ```
 
+### Testing the API Clients
+
+The project includes test clients and tools in the `test` directory to help you test the API endpoints. For detailed information about testing, please refer to the [Testing Documentation](test/TESTING.md). The test clients are organized in the following directories:
+
+- `test/client`: Contains the client for testing the API endpoints
+- `test/webhook`: Contains the webhook simulator for testing webhook integration
+
+#### Automated Testing
+
+The project includes scripts that automate the process of running the server and test client together:
+
+**Windows (PowerShell):**
+```powershell
+.\test\run_tests.ps1
+```
+
+**Linux/macOS (Bash):**
+```bash
+chmod +x test/run_tests.sh  # Make the script executable (first time only)
+./test/run_tests.sh
+```
+
+These scripts handle starting the server, running the client against it, and optionally running the webhook simulator. See the [Testing Documentation](test/TESTING.md) for more details and available options.
+
 ## Todoist Webhook Integration
 
 ### Setup Instructions
@@ -231,37 +255,7 @@ fmt.Printf("Status: %s\n", response.Status)
 
 ### Testing the Webhook
 
-#### Using the Webhook Simulator
-
-A webhook simulator is included in the `test` directory to help you test your webhook implementation without needing a real Todoist integration:
-
-```bash
-# Build the simulator
-cd test
-go build -o simulate_webhook simulate_webhook.go
-
-# Run the simulator with default settings (sends an item:added event to localhost:8080)
-./simulate_webhook
-
-# Run with custom parameters
-./simulate_webhook -url="http://your-server.com/webhooks/todoist" -secret="your_secret" -event="item:completed" -user="67890"
-```
-
-Note: The simulator uses the `models` package from the main application, so make sure you have the correct module structure set up.
-
-Available parameters:
-- `-url`: The URL to send the webhook to (default: "http://localhost:8080/webhooks/todoist")
-- `-secret`: Your Todoist client secret for signature verification
-- `-event`: Event type (item:added, item:updated, item:deleted, item:completed)
-- `-user`: User ID for the webhook payload
-
-#### Using a Real Todoist Integration
-
-To test with a real Todoist integration:
-
-1. Make changes in your Todoist account that trigger the events you've subscribed to
-2. Check your server logs for webhook reception and processing messages
-3. Verify that the signature verification is working correctly
+The project includes a webhook simulator in the `test/webhook` directory to help you test your webhook implementation without needing a real Todoist integration. For detailed information about testing webhooks, please refer to the [Testing Documentation](test/TESTING.md).
 
 ## License
 

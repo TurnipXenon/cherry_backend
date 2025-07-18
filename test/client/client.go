@@ -21,6 +21,10 @@ func testTodoistClient() {
 	// Create a Todoist client
 	todoistClient := api.NewTodoistClient("http://localhost:8080")
 
+	// Set the client secret for HMAC signature calculation
+	// This should match the TODOIST_CLIENT_SECRET environment variable on the server
+	todoistClient.SetSecret("test_secret")
+
 	// Create a webhook request
 	request := &api.TodoistWebhookRequest{
 		EventName: "item:added",
