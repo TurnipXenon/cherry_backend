@@ -8,6 +8,9 @@ on:
       - 'docs/**'
       - '.github/workflows/mkdocs-deploy.yml'
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
