@@ -68,7 +68,7 @@ func (s *Server) TodoistWebhookHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Process the webhook
 	todoistService := &TodoistServiceImpl{}
-	response, err := todoistService.ProcessWebhook(&request)
+	response, err := todoistService.ProcessWebhook(r.Context(), &request)
 	if err != nil {
 		log.Printf("Error processing webhook: %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
