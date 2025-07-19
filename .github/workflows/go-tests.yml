@@ -12,6 +12,8 @@ jobs:
   test:
     name: Run Go Tests
     runs-on: ubuntu-latest
+    env:
+      CHERRY_LOG_PATH: './logs'
     steps:
       - name: Check out code
         uses: actions/checkout@v3
