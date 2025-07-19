@@ -17,5 +17,6 @@
 - [ ] Testing via dev stack
 - [ ] Deploying to production
 - [ ] Runbook
+- [x] [Logging System](logging.md)
 - [ ] API
 - [ ] Technical specification (generated)

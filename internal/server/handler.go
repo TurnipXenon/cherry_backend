@@ -16,12 +16,22 @@ import (
 
 // TodoistWebhookHandler processes incoming webhook notifications from Todoist
 func (s *Server) TodoistWebhookHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Received webhook request from Todoist")
+	// Create a new TodoistServiceImpl with a logger
+	todoistService, err := NewTodoistServiceImpl()
+	if err != nil {
+		log.Printf("Error creating TodoistServiceImpl: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	// Use the logger for all logging
+	logger := todoistService.Logger
+	logger.Info("Received webhook request from Todoist")
 
 	// Get the client secret from environment variables
 	clientSecret := os.Getenv("TODOIST_CLIENT_SECRET")
 	if clientSecret == "" {
-		log.Println("Warning: TODOIST_CLIENT_SECRET not set")
+		logger.Warn("TODOIST_CLIENT_SECRET not set")
 	}
 
 	// Verify the request signature if client secret is available
@@ -29,7 +39,7 @@ func (s *Server) TodoistWebhookHandler(w http.ResponseWriter, r *http.Request) {
 		// Get the X-Todoist-Hmac-SHA256 header
 		signature := r.Header.Get("X-Todoist-Hmac-SHA256")
 		if signature == "" {
-			log.Println("Error: Missing X-Todoist-Hmac-SHA256 header")
+			logger.Error("Missing X-Todoist-Hmac-SHA256 header")
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
@@ -37,7 +47,7 @@ func (s *Server) TodoistWebhookHandler(w http.ResponseWriter, r *http.Request) {
 		// Read the request body
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
-			log.Printf("Error reading request body: %v", err)
+			logger.Error("Error reading request body: %v", err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
@@ -47,30 +57,29 @@ func (s *Server) TodoistWebhookHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Verify the signature
 		if !verifyTodoistSignature(body, signature, clientSecret) {
-			log.Println("Error: Invalid signature")
+			logger.Error("Invalid signature")
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
-		log.Println("Webhook signature verified successfully")
+		logger.Info("Webhook signature verified successfully")
 	} else {
-		log.Println("Warning: Skipping signature verification as TODOIST_CLIENT_SECRET is not set")
+		logger.Warn("Skipping signature verification as TODOIST_CLIENT_SECRET is not set")
 	}
 
 	// Parse the webhook payload
 	var request apiv1.TodoistWebhookRequest
-	err := json.NewDecoder(r.Body).Decode(&request)
+	err = json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		log.Printf("Error parsing webhook payload: %v", err)
+		logger.Error("Error parsing webhook payload: %v", err)
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
 
 	// Process the webhook
-	todoistService := &TodoistServiceImpl{}
 	response, err := todoistService.ProcessWebhook(r.Context(), &request)
 	if err != nil {
-		log.Printf("Error processing webhook: %v", err)
+		logger.Error("Error processing webhook: %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -80,7 +89,7 @@ func (s *Server) TodoistWebhookHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
-		log.Printf("Error encoding response: %v", err)
+		logger.Error("Error encoding response: %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -103,6 +112,18 @@ func verifyTodoistSignature(payload []byte, signature, secret string) bool {
 
 // HealthCheckHandler performs a health check
 func (s *Server) HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	// Create a new TodoistServiceImpl with a logger (we'll use this logger for health checks too)
+	todoistService, err := NewTodoistServiceImpl()
+	if err != nil {
+		log.Printf("Error creating TodoistServiceImpl for health check: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	// Use the logger for all logging
+	logger := todoistService.Logger
+	logger.Info("Received health check request")
+
 	// Create request
 	request := &apiv1.HealthCheckRequest{}
 
@@ -110,10 +131,12 @@ func (s *Server) HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	healthService := &HealthServiceImpl{}
 	response, err := healthService.Check(request)
 	if err != nil {
-		log.Printf("Error performing health check: %v", err)
+		logger.Error("Error performing health check: %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
+
+	logger.Info("Health check successful")
 
 	// Return response
 	w.Header().Set("Content-Type", "application/json")
